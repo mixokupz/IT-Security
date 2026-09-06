@@ -476,9 +476,84 @@ private boolean isAllowedImageType(MultipartFile file) throws IOException {
 
 # ДЗ
 
-## 1
+1. Сделать форк демо приложения или написать свое на любом ЯП - https://github.com/avnosenko/nsu-course/tree/main/practice/practice1/demo
+2. Выбрать уязвимость из списка ниже и внедрить ее в свой форк
+3. Написать PoC-эксплойт в формате curl-запроса или скрипта (python, js - любой)
+4. Описать суть уязвимости текстом,  прикрепить скриншот успешной эксплуатации
+5. Реализовать исправление (в отдельном методе или отдельной функцией, параметром) и описать суть исправления текстом
+6. Вся работа должна быть в репозитории
 
-## 2
+## 1. Insecure Direct Object Reference
+
+Внедрить уязвимость IDOR. Например, в метод `GET /orders/{id}` в `OrderController`.
+
+> Поскольку в демо приложении нет авторизации, нужно ее добавить - даже простую, например, по заголовку X-User-Id
+
+Теория про IDOR:
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html)
+- [portswigger](https://portswigger.net/web-security/access-control/idor)
+
+## 2. Mass Assignment
+
+Внедрить уязвимость Mass Assignment в любой подходящий эндпоинт.
+
+Теория по Mass Assignment: 
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html)
+
+> Подсказка: в демо приложении уже есть эта уязвимость
+
+## 3. Server-Side Request Forgery (SSRF)
+
+Добавить новый эндпоинт загрузки файла по URL. Нужно продемонстрировать, что через этот эндпоинт можно достучаться до внутренних ресурсов, например, до базы данных.
+
+Теория по SSRF: 
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+- [portswigger](https://portswigger.net/web-security/ssrf)
+
+## 4. Cross-Site Scripting (XSS)
+
+Внедрить уязвимость XSS. Если этого не получится сделать в Swagger UI - добавить свой HTML. Для демонстрации критичности можно добавить куки.
+
+Теория по XSS: 
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html)
+- [portswigger](https://portswigger.net/web-security/cross-site-scripting)
+
+## 5. XML External Entity (XXE)
+
+Внедрить уязвимость XML External Entity. Для этого нужно добавить прием данных в формате XML на каком-либо эндпоинте и парсинг.
+
+Теория по XXE: 
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.html)
+- [portswigger](https://portswigger.net/web-security/xxe)
+
+## 6. Error Handling
+
+Внедрить или найти уязвимость раскрытия информации через стектрейсы. Показать, что подробные сообщения об ошибках раскрывают внутреннюю структуру БД и логику приложения атакующему.
+
+Теория по Error Handling: 
+- [cheatsheetseries](https://cheatsheetseries.owasp.org/cheatsheets/Error_Handling_Cheat_Sheet.html)
+
+## 7. OS Command Injection
+
+Добавить новый эндпоинт, который выполняет системную команду с пользовательским вводом — например, "конвертировать загруженное изображение" через `ProcessBuilder/Runtime.exec()`, вызывающий `convert` (ImageMagick) или `ffmpeg`, где имя файла подставляется в команду.
+
+Теория:
+- [OS Command Injection Defense](https://cheatsheetseries.owasp.org/cheatsheets/OS_Command_Injection_Defense_Cheat_Sheet.html)
+- [PortSwigger — OS command injection](https://portswigger.net/web-security/os-command-injection)
+
+## 7. Java Deserialization
+
+Добавить эндпоинт, принимающий сериализованный Java-объект через `ObjectInputStream` из тела запроса, при десериализации потенциально возможен RCE
+
+Теория:
+- [Deserialization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Deserialization_Cheat_Sheet.html)
+
+## 8. Open redirect
+
+Добавить эндпоинт вроде `GET /orders/redirect?url=...`, который делает 302 Redirect на переданный URL без валидации
+
+Теория:
+- [Unvalidated Redirects and Forwards](https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html)
 
 # Полезные ссылки
 
