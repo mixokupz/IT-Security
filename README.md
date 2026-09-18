@@ -9,3 +9,11 @@
 Злоумышленник, зная о этом эндпоинте, может воспользоваться уязвимостью.
 
 ### Как воспроизвести уязвимость:
+1. Поднять докер-контейнеры (sudo docker compose up -d --build)
+2. Подключиться к БД (sudo docker exec -it demo-db-1 psql -U demo -d demo)
+3. На всякий случай заполнить таблицу secrets (insert into secrets values (1, 'ivan', 'qwerty'); insert into secrets values (2, 'vovan', '123');)
+4. Выполнить GET-запрос http://localhost:8080/download?url=http://localhost:8080/secrets
+
+По сервис с уязвимостью вернет конфиденциалльные данные третьему лицу:
+
+<img width="1274" height="536" alt="Screenshot From 2026-09-18 11-24-39" src="https://github.com/user-attachments/assets/15996571-0bea-4566-988e-94482e16e25c" />
