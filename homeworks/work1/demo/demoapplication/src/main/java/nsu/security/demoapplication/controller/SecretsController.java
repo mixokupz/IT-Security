@@ -25,10 +25,10 @@ public class SecretsController {
     @GetMapping("/secrets")
     public ResponseEntity<List<Secret>> getOrder(@RequestHeader(value = "User-Agent", required = true) String userAgent) {
 
-        if (userAgent == null || !userAgent.equals("SAFE-APP")) {
+        /*if (userAgent == null || !userAgent.equals("SAFE-APP")) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        
+        */
         List<Secret> secrets = secretsJdbcRepository.getSecrets();
         if (secrets.isEmpty()) {
             return ResponseEntity.notFound().build();
