@@ -26,3 +26,7 @@
 `if (userAgent == null || !userAgent.equals("SAFE-APP")) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 }`
+
+В итоге сервис должен вернуть отказ:
+
+<img width="1588" height="719" alt="Screenshot From 2026-09-18 11-27-28" src="https://github.com/user-attachments/assets/d9a45b17-15d3-4f65-8325-56641c73dc43" />
