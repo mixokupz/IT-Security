@@ -12,11 +12,12 @@
 1. Поднять докер-контейнеры (sudo docker compose up -d --build)
 2. Подключиться к БД (sudo docker exec -it demo-db-1 psql -U demo -d demo)
 3. На всякий случай заполнить таблицу secrets (insert into secrets values (1, 'ivan', 'qwerty'); insert into secrets values (2, 'vovan', '123');)
-4. Выполнить GET-запрос http://localhost:8080/download?url=http://localhost:8080/secrets
+4. Выполнить GET-запрос http://192.168.1.22:8080/download?url=http://192.168.1.22:8080/secrets
 
 По сервис с уязвимостью вернет конфиденциалльные данные третьему лицу:
 
-<img width="1274" height="536" alt="Screenshot From 2026-09-18 11-24-39" src="https://github.com/user-attachments/assets/15996571-0bea-4566-988e-94482e16e25c" />
+<img width="1280" height="2772" alt="Screenshot_2026-09-19-21-21-40-605_com yandex searchapp" src="https://github.com/user-attachments/assets/41bb44b7-1e91-4743-b667-2ac8670f4c96" />
+
 
 ### Как исправить уязвимость:
 
@@ -30,6 +31,6 @@
         }
 `
 
-В итоге сервис должен вернуть отказ (запрос был выполнен на роутер):
+В итоге сервис должен вернуть отказ:
 
 <img width="1280" height="2772" alt="unnamed" src="https://github.com/user-attachments/assets/55840348-2cf1-448d-847a-50aee992ba18" />
