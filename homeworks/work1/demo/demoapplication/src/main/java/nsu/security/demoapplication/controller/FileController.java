@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.HttpStatus;
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -103,7 +104,17 @@ public class FileController {
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
     }
-    ////доделать!!!!!!!
+
+    /*private boolean isUriSafe(URI url) {
+        String target = url.getHost();
+
+        if (target.equals("localhost") || target.equals("127.0.0.1") || target.equals("192.168.1.22")) {
+            return false;
+        }
+
+        return true;
+    }*/
+
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> download(@RequestParam("url") String url, @RequestHeader("User-Agent") String userAgent) {
         URI uri;
@@ -111,6 +122,10 @@ public class FileController {
             uri = URI.create(url);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
+        }
+
+        if (!isUriSafe(uri)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         HttpClient client = HttpClient.newBuilder()
