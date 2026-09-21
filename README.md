@@ -12,7 +12,7 @@
 1. Поднять докер-контейнеры (sudo docker compose up -d --build)
 2. Подключиться к БД (sudo docker exec -it demo-db-1 psql -U demo -d demo)
 3. На всякий случай заполнить таблицу secrets (insert into secrets values (1, 'ivan', 'qwerty'); insert into secrets values (2, 'vovan', '123');)
-4. Выполнить GET-запрос http://192.168.1.22:8080/download?url=http://192.168.1.22:8080/secrets
+4. Выполнить GET-запрос http://192.168.1.22:8080/download?url=http://localhost:8080/secrets
 
 По сервис с уязвимостью вернет конфиденциалльные данные третьему лицу:
 
