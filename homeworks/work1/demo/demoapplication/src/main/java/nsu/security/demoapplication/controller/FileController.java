@@ -26,12 +26,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.net.InetAddress;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,15 +107,27 @@ public class FileController {
                 .body(resource);
     }
 
-    /*private boolean isUriSafe(URI url) {
+    private boolean isUriSafe(URI url) {
         String target = url.getHost();
 
-        if (target.equals("localhost") || target.equals("127.0.0.1") || target.equals("192.168.1.22")) {
+        try {
+            InetAddress addr = InetAddress.getByName(target);
+
+            if (addr.isLoopbackAddress()) {
+                return false;
+            }
+
+            String ip = addr.getHostAddress();
+
+            if (ip.equals("127.0.0.1")) {
+                return false;
+            }
+        } catch (UnknownHostException e) {
             return false;
         }
 
         return true;
-    }*/
+    }
 
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> download(@RequestParam("url") String url, @RequestHeader("User-Agent") String userAgent) {

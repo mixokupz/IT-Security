@@ -27,12 +27,12 @@ public class SecretsController {
     @GetMapping("/secrets")
     public ResponseEntity<List<Secret>> getSecrets(HttpServletRequest request) {
 
-        /*String clientIp = request.getRemoteAddr();
+        String clientIp = request.getRemoteAddr();
 
         if(!clientIp.equals("127.0.0.1")) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-        */
+
 
         List<Secret> secrets = secretsJdbcRepository.getSecrets();
         if (secrets.isEmpty()) {
