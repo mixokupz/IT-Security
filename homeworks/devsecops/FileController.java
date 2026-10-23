@@ -138,9 +138,9 @@ public class FileController {
             return ResponseEntity.badRequest().build();
         }
 
-        if (!isUriSafe(uri)) {
+        /*if (!isUriSafe(uri)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        }*/
 
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(5))
