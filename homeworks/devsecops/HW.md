@@ -2,16 +2,16 @@
 
 ## 1. Описание внедренной уязвимости
 
-Тип уязвимости: Server-Side Request Forgery (SSRF)
+**Тип уязвимости**: Server-Side Request Forgery (SSRF)
 
-CWE: CWE-918
+**CWE**: CWE-918
 
-Файл и строки:
+**Файл и строки**:
 `FileController.java`, строки 132–159 (эндпоинт `/download`)
 
-Источник (откуда приходят недоверенные данные): параметр `url` из `@RequestParam("url")` (строка 133), а также заголовок `User-Agent` из `@RequestHeader` (используется в заголовке запроса).
+**Источник (откуда приходят недоверенные данные)**: параметр `url` из `@RequestParam("url")` (строка 133), а также заголовок `User-Agent` из `@RequestHeader` (используется в заголовке запроса).
 
-Синк (где данные используются опасно): `client.send(request, ...)` — исходящий HTTP-запрос на URI, построенный из пользовательского ввода (строка 159). Также опасен сам `HttpRequest.newBuilder(uri)` (строка 150) и `HttpClient` с `followRedirects(NORMAL)`.
+**Синк (где данные используются опасно)**: `client.send(request, ...)` — HTTP-запрос на URI, построенный из пользовательского ввода (строка 159).
 
 Фрагмент уязвимого кода:
 ```java
@@ -141,8 +141,8 @@ sudo docker run --rm -v "${PWD}/src:/src" -e SEMGREP_APP_TOKEN=<token> semgrep/s
 
 Версия | Результат | Правило
 ---|---|---
-Уязвимая | TP | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add`
-Исправленная | FP | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add`
+Уязвимая | TP | https://semgrep.dev/r?q=java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add
+Исправленная | FP | https://semgrep.dev/r?q=java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add
 
 ### 3.1. Уязвимая версия
 
@@ -150,8 +150,8 @@ sudo docker run --rm -v "${PWD}/src:/src" -e SEMGREP_APP_TOKEN=<token> semgrep/s
 
 Поле | Значение
 ---|---
-ID правила | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add` (rule_id `JDU4Yg`)
-CWE | CWE-918: Server-Side Request Forgery (SSRF)
+ID правила | https://semgrep.dev/r?q=java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add
+CWE | CWE-918
 Файл | `FileController.java`
 Строка | 159 (`response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());`)
 Сообщение сканера | "Untrusted input might be used to build an HTTP request, which can lead to a Server-side request forgery (SSRF) vulnerability..."
@@ -164,8 +164,8 @@ CWE | CWE-918: Server-Side Request Forgery (SSRF)
 
 Поле | Значение
 ---|---
-ID правила | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add` (rule_id `JDU4Yg`)
-CWE | CWE-918: Server-Side Request Forgery (SSRF)
+ID правила | https://semgrep.dev/r?q=java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add
+CWE | CWE-918
 Файл | `FileController.java`
 Строка | 159 (тот же синк)
 Сообщение сканера | то же сообщение об SSRF
