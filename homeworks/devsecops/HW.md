@@ -4,7 +4,7 @@
 
 Тип уязвимости: Server-Side Request Forgery (SSRF)
 
-CWE: CWE-918: Server-Side Request Forgery (SSRF)
+CWE: CWE-918
 
 Файл и строки:
 `FileController.java`, строки 132–159 (эндпоинт `/download`)
@@ -121,8 +121,8 @@ public ResponseEntity<InputStreamResource> download(@RequestParam("url") String 
 
 Параметр | Значение
 ---|---
-Сканер | Semgrep (версия 1.180.0)
-Наборы правил | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add` (Semgrep Pro rules, Spring SSRF)
+Сканер | semgrep
+Наборы правил | p/java 
 
 Команда запуска:
 ```
@@ -130,7 +130,7 @@ sudo docker run --rm -v "${PWD}/src:/src" -e SEMGREP_APP_TOKEN=<token> semgrep/s
 
 ```
 
-Проверка покрытия: файл с уязвимостью присутствует в списке просканированных файлов, ошибок парсинга нет. **Да** — в `paths.scanned` указан `FileController.java`, `errors: []`.
+Проверка покрытия: файл с уязвимостью присутствует в списке просканированных файлов, ошибок парсинга нет.
 
 Приложенные отчеты сканера:
 
