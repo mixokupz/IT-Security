@@ -156,7 +156,7 @@ CWE | CWE-918: Server-Side Request Forgery (SSRF)
 Строка | 159 (`response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());`)
 Сообщение сканера | "Untrusted input might be used to build an HTTP request, which can lead to a Server-side request forgery (SSRF) vulnerability..."
 
-Обоснование классификации: **TP** — источник (`url` из `@RequestParam`, строка 133) через промежуточные переменные `url` → `uri` (строка 136) → `request` (строка 150) достигает синка `client.send(request, ...)` (строка 159). Совпадение по месту (строка 159, sink `request`) и CWE-918. `dataflow_trace` подтверждает цепочку: taint_source → intermediate_vars → taint_sink.
+Обоснование классификации: это TP, поскольку сканер верно определил тип уязвимости, локацию в коде, и уязвимость реально можно проэксплуатировать.
 
 ### 3.2. Исправленная версия
 
@@ -167,7 +167,7 @@ CWE | CWE-918: Server-Side Request Forgery (SSRF)
 ID правила | `java.spring.security.tainted-ssrf-spring-add.tainted-ssrf-spring-add` (rule_id `JDU4Yg`)
 CWE | CWE-918: Server-Side Request Forgery (SSRF)
 Файл | `FileController.java`
-Строка | 159 (offset 5544 — тот же sink, смещение из-за раскомментированной проверки)
+Строка | 159 (тот же синк)
 Сообщение сканера | то же сообщение об SSRF
 
 Обоснование классификации: **FP** — в исправленной версии перед sink выполняется `isUriSafe(uri)`, которая блокирует loopback-адреса и нерезолвящиеся хосты. Сканер не учитывает эту проверку как санитайзер (пользовательская функция валидации не смоделирована), поэтому цепочка taint сохраняется и находится та же находка.
